@@ -1,26 +1,86 @@
 @import "tailwindcss";
 
+@theme {
+  --color-espresso-black: #0c0807;
+  --color-espresso-dark: #1a100d;
+  --color-coffee-brown: #3d2314;
+  --color-coffee-gold: #c59b6d;
+  --color-coffee-gold-light: #e6cbac;
+  --color-warm-cream: #fcfaf7;
+  --color-warm-cream-dark: #f3ede2;
+  --color-plantation-green: #1d3326;
+  --color-plantation-green-light: #2c4c38;
+  
+  --font-serif-editorial: "Playfair Display", Georgia, serif;
+  --font-sans-premium: "Outfit", var(--font-geist-sans), sans-serif;
+  
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fcfaf7; /* Warm cream */
+  --foreground: #1a100d; /* Espresso dark */
+  --primary-gold: #c59b6d;
+  --primary-gold-light: #e6cbac;
+  --espresso-black: #0c0807;
+  --espresso-dark: #1a100d;
+  --coffee-brown: #3d2314;
+  --plantation-green: #1d3326;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Elegant custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0c0807;
+}
+::-webkit-scrollbar-thumb {
+  background: #c59b6d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #e6cbac;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans-premium);
+  overflow-x: hidden;
 }
+
+/* Glassmorphism helpers */
+.glass-dark {
+  background: rgba(12, 8, 7, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 155, 109, 0.15);
+}
+
+.glass-light {
+  background: rgba(252, 250, 247, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(61, 35, 20, 0.08);
+}
+
+.gold-glow {
+  text-shadow: 0 0 12px rgba(197, 155, 109, 0.4);
+}
+
+.border-gold-subtle {
+  border-color: rgba(197, 155, 109, 0.2);
+}
+
+/* Custom animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+
