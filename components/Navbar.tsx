@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Globe, Download, ChevronRight } from "lucide-react";
 import { Button } from "./ui/Button";
 import RequestQuoteModal from "./RequestQuoteModal";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -78,6 +79,7 @@ export default function Navbar() {
 
             {/* Header Right Actions */}
             <div className="hidden xl:flex items-center gap-4">
+              <LanguageSwitcher />
               <a
                 href="/PT_AcewinMello.pdf"
                 target="_blank"
@@ -132,6 +134,10 @@ export default function Navbar() {
             })}
             
             <div className="pt-6 flex flex-col gap-4">
+              <div className="flex items-center justify-between px-4 py-2 border border-gray-200 rounded-md">
+                <span className="font-medium text-gray-700">Language</span>
+                <LanguageSwitcher />
+              </div>
               <a
                 href="/PT_AcewinMello.pdf"
                 target="_blank"
