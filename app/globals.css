@@ -38,8 +38,12 @@
 /* Hide Google Translate Default UI */
 body {
   top: 0 !important;
+  position: static !important;
 }
-.goog-te-banner-frame {
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame,
+iframe.VIpgJd-Zvi9od-ORHb-OEVmcd,
+.skiptranslate > iframe.VIpgJd-Zvi9od-ORHb-OEVmcd {
   display: none !important;
 }
 .goog-logo-link {
@@ -53,6 +57,10 @@ body {
 }
 #goog-gt-tt, .goog-te-balloon-frame {
   display: none !important;
+}
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q {
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 font {
   background: transparent !important;
