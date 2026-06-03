@@ -1,47 +1,34 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useApp } from "../context/AppContext";
-import { ShoppingBag, User, Menu, X, Coffee, Truck } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Menu, X, Globe, Download, ChevronRight } from "lucide-react";
+import { Button } from "./ui/Button";
+import RequestQuoteModal from "./RequestQuoteModal";
 
 export default function Navbar() {
-  const {
-    language,
-    setLanguage,
-    t,
-    cart,
-    setIsCartOpen,
-    setIsLoginOpen,
-    setIsTrackingOpen,
-    user,
-  } = useApp();
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const pathname = usePathname();
 
-  // Monitor scroll for visual aesthetics
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
   const navLinks = [
-    { name: t("navHome"), href: "#home" },
-    { name: t("navAbout"), href: "#about" },
-    { name: t("navProducts"), href: "#products" },
-    { name: t("navOrigins"), href: "#origins" },
-    { name: t("navBrewing"), href: "#brewing" },
-    { name: t("navContact"), href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Business Divisions", href: "/divisions" },
+    { name: "Products", href: "/products" },
+    { name: "Services", href: "/services" },
+    { name: "Industries", href: "/industries" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -49,219 +36,132 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-espresso-black/90 backdrop-blur-md border-b border-coffee-gold/15 py-3 shadow-lg"
-            : "bg-gradient-to-b from-espresso-black/80 to-transparent py-5"
+            ? "bg-white/95 backdrop-blur-md shadow-sm py-2"
+            : "bg-white py-3 md:py-4 shadow-sm"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href="#home" className="flex items-center gap-2 group">
-              <motion.div
-                whileHover={{ rotate: 15, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="w-10 h-10 rounded-full bg-coffee-gold flex items-center justify-center text-espresso-black shadow-md shadow-coffee-gold/20"
-              >
-                <Coffee className="w-5 h-5 fill-current" />
-              </motion.div>
-              <div className="flex flex-col">
-                <span className="text-white font-serif-editorial text-lg md:text-xl font-bold tracking-wider leading-none group-hover:text-coffee-gold transition-colors duration-300">
-                  BIJI KOPI
-                </span>
-                <span className="text-[10px] text-coffee-gold/75 tracking-[0.2em] leading-none uppercase mt-0.5">
-                  Nusantara
-                </span>
-              </div>
-            </a>
+            <Link href="/" className="flex items-center gap-3 group">
+              <Image 
+                src="/PtAcewinLogo.png" 
+                alt="PT Acewin Mello International Logo" 
+                width={300} 
+                height={120} 
+                className={`w-auto object-contain transition-all duration-300 ${
+                  isScrolled ? "h-12 md:h-14" : "h-16 md:h-20"
+                }`} 
+              />
+            </Link>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="text-warm-cream/80 hover:text-coffee-gold text-sm font-medium tracking-wide uppercase transition-colors duration-300 relative py-1 group"
-                >
-                  {link.name}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-coffee-gold transition-all duration-300 group-hover:w-full" />
-                </a>
-              ))}
+            {/* Desktop Navigation */}
+            <nav className="hidden xl:flex items-center gap-6">
+              {navLinks.map((link) => {
+                const isActive = link.href === "/" 
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href);
+                  
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`text-sm font-medium transition-colors hover:text-emerald-900 ${
+                      isActive ? "text-emerald-900 font-semibold" : "text-gray-600"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Header Right Actions */}
-            <div className="hidden md:flex items-center gap-5">
-              {/* Language Pill */}
-              <div className="flex items-center border border-coffee-gold/20 rounded-full bg-espresso-black/50 p-0.5">
-                <button
-                  onClick={() => setLanguage("en")}
-                  className={`px-2.5 py-1 text-[11px] font-bold rounded-full transition-all duration-200 ${
-                    language === "en"
-                      ? "bg-coffee-gold text-espresso-black shadow-sm"
-                      : "text-warm-cream/60 hover:text-warm-cream"
-                  }`}
-                >
-                  EN
-                </button>
-                <button
-                  onClick={() => setLanguage("id")}
-                  className={`px-2.5 py-1 text-[11px] font-bold rounded-full transition-all duration-200 ${
-                    language === "id"
-                      ? "bg-coffee-gold text-espresso-black shadow-sm"
-                      : "text-warm-cream/60 hover:text-warm-cream"
-                  }`}
-                >
-                  ID
-                </button>
-              </div>
-
-              {/* Order Tracking Button */}
-              <button
-                onClick={() => setIsTrackingOpen(true)}
-                className="text-warm-cream/80 hover:text-coffee-gold transition-colors p-1.5 rounded-full hover:bg-white/5 relative group"
-                title={t("navTrack")}
+            <div className="hidden xl:flex items-center gap-4">
+              <a
+                href="/PT_AcewinMello.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative inline-flex items-center justify-center px-4 py-2 font-medium text-white transition-all duration-300 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-800 hover:from-emerald-500 hover:to-emerald-700 shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_20px_rgba(16,185,129,0.6)] group"
               >
-                <Truck className="w-5 h-5" />
-                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-espresso-black border border-coffee-gold/20 text-coffee-gold text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  {t("navTrack")}
-                </span>
-              </button>
-
-              {/* Customer Account Button */}
-              <button
-                onClick={() => setIsLoginOpen(true)}
-                className="text-warm-cream/80 hover:text-coffee-gold transition-colors p-1.5 rounded-full hover:bg-white/5 flex items-center gap-1.5 group"
-              >
-                <User className="w-5 h-5" />
-                {user?.isLoggedIn && (
-                  <span className="text-xs max-w-[80px] truncate text-coffee-gold/90 font-medium hidden lg:inline">
-                    {user.name.split(" ")[0]}
-                  </span>
-                )}
-              </button>
-
-              {/* Shopping Cart Button */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="bg-coffee-gold hover:bg-coffee-gold-light text-espresso-black p-2.5 rounded-full transition-all duration-300 relative shadow-md shadow-coffee-gold/10 hover:shadow-coffee-gold/30 hover:scale-105 active:scale-95"
-              >
-                <ShoppingBag className="w-5 h-5" />
-                <AnimatePresence>
-                  {totalCartItems > 0 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                      className="absolute -top-1.5 -right-1.5 bg-red-600 text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-espresso-black"
-                    >
-                      {totalCartItems}
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
+                <Download className="w-4 h-4 mr-2 transition-transform group-hover:-translate-y-1" />
+                Company Profile
+              </a>
+              <Button onClick={() => setIsQuoteModalOpen(true)}>
+                Get Quote
+              </Button>
             </div>
 
-            {/* Mobile Actions Drawer Toggles */}
-            <div className="flex md:hidden items-center gap-3">
-              {/* Cart Button */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="bg-coffee-gold text-espresso-black p-2 rounded-full relative"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                {totalCartItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                    {totalCartItems}
-                  </span>
-                )}
-              </button>
-
-              {/* Mobile Hamburger Toggle */}
+            {/* Mobile Menu Toggle */}
+            <div className="xl:hidden flex items-center gap-3">
+              <Button size="sm" onClick={() => setIsQuoteModalOpen(true)} className="md:hidden">
+                Quote
+              </Button>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-warm-cream/90 hover:text-coffee-gold p-1.5"
+                className="text-gray-600 hover:text-emerald-900 p-2"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
         </div>
-      </header>
 
-      {/* Mobile Drawer Overlay */}
-      <AnimatePresence>
+        {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[65px] z-40 bg-espresso-black/95 backdrop-blur-xl border-t border-coffee-gold/10 md:hidden flex flex-col justify-between py-8 px-6"
-          >
-            <div className="flex flex-col gap-6">
-              {navLinks.map((link) => (
-                <a
+          <div className="absolute top-full left-0 right-0 h-[calc(100vh-100px)] z-40 bg-white flex flex-col xl:hidden border-t">
+          <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+            {navLinks.map((link) => {
+              const isActive = link.href === "/" 
+                ? pathname === "/"
+                : pathname.startsWith(link.href);
+                
+              return (
+                <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-warm-cream text-lg font-serif-editorial tracking-wider border-b border-white/5 pb-2 hover:text-coffee-gold transition-colors"
+                  className={`text-lg font-medium border-b border-gray-100 pb-3 flex items-center justify-between ${
+                    isActive ? "text-emerald-900" : "text-gray-700"
+                  }`}
                 >
                   {link.name}
-                </a>
-              ))}
+                  <ChevronRight className="w-5 h-5 text-gray-300" />
+                </Link>
+              );
+            })}
+            
+            <div className="pt-6 flex flex-col gap-4">
+              <a
+                href="/PT_AcewinMello.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3 border border-gray-200 rounded-md font-medium text-gray-700"
+              >
+                <Download className="w-5 h-5" />
+                Download Company Profile
+              </a>
+              <Button 
+                className="w-full" 
+                size="lg" 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  setIsQuoteModalOpen(true);
+                }}
+              >
+                Request Quotation
+              </Button>
             </div>
+          </div>
+        </div>
+      )}
+    </header>
 
-            <div className="flex flex-col gap-5 border-t border-white/10 pt-6">
-              {/* Controls */}
-              <div className="flex items-center justify-between">
-                <span className="text-warm-cream/50 text-sm">{t("navTrack")} & Account</span>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setIsTrackingOpen(true);
-                    }}
-                    className="p-2 border border-coffee-gold/20 rounded-full text-coffee-gold hover:bg-coffee-gold/10"
-                  >
-                    <Truck className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setIsLoginOpen(true);
-                    }}
-                    className="p-2 border border-coffee-gold/20 rounded-full text-coffee-gold hover:bg-coffee-gold/10"
-                  >
-                    <User className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Mobile Language Switcher */}
-              <div className="flex items-center justify-between">
-                <span className="text-warm-cream/50 text-sm">Language / Bahasa</span>
-                <div className="flex items-center border border-coffee-gold/20 rounded-full bg-espresso-black p-0.5">
-                  <button
-                    onClick={() => setLanguage("en")}
-                    className={`px-3 py-1 text-xs font-bold rounded-full ${
-                      language === "en" ? "bg-coffee-gold text-espresso-black" : "text-warm-cream/60"
-                    }`}
-                  >
-                    English
-                  </button>
-                  <button
-                    onClick={() => setLanguage("id")}
-                    className={`px-3 py-1 text-xs font-bold rounded-full ${
-                      language === "id" ? "bg-coffee-gold text-espresso-black" : "text-warm-cream/60"
-                    }`}
-                  >
-                    Indonesia
-                  </button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Global Modals */}
+      <RequestQuoteModal 
+        open={isQuoteModalOpen} 
+        onOpenChange={setIsQuoteModalOpen} 
+      />
     </>
   );
 }

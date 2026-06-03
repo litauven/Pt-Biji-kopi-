@@ -1,46 +1,45 @@
 @import "tailwindcss";
 
 @theme {
-  --color-espresso-black: #0c0807;
-  --color-espresso-dark: #1a100d;
-  --color-coffee-brown: #3d2314;
-  --color-coffee-gold: #c59b6d;
-  --color-coffee-gold-light: #e6cbac;
-  --color-warm-cream: #fcfaf7;
-  --color-warm-cream-dark: #f3ede2;
-  --color-plantation-green: #1d3326;
-  --color-plantation-green-light: #2c4c38;
+  /* Acewin Mello International Color Palette */
+  --color-aw-primary: #0F5132;
+  --color-aw-primary-dark: #0a3622;
+  --color-aw-primary-light: #167a4b;
+  --color-aw-secondary: #D4A017;
+  --color-aw-secondary-dark: #a87e12;
+  --color-aw-accent: #E76F00;
+  --color-aw-accent-dark: #b85800;
+  --color-aw-background: #F7F2E9;
+  --color-aw-surface: #ffffff;
+  --color-aw-foreground: #1a1a1a;
+  --color-aw-foreground-muted: #4a4a4a;
   
-  --font-serif-editorial: "Playfair Display", Georgia, serif;
-  --font-sans-premium: "Outfit", var(--font-geist-sans), sans-serif;
+  --font-sans: "Inter", var(--font-geist-sans), sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
   
   --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
-  --background: #fcfaf7; /* Warm cream */
-  --foreground: #1a100d; /* Espresso dark */
-  --primary-gold: #c59b6d;
-  --primary-gold-light: #e6cbac;
-  --espresso-black: #0c0807;
-  --espresso-dark: #1a100d;
-  --coffee-brown: #3d2314;
-  --plantation-green: #1d3326;
+  --background: #F7F2E9;
+  --foreground: #1a1a1a;
 }
 
-/* Elegant custom scrollbar */
+/* Elegant B2B custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0c0807;
+  background: #F7F2E9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c59b6d;
+  background: #0F5132;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #e6cbac;
+  background: #167a4b;
 }
 
 html {
@@ -52,35 +51,46 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans-premium);
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
-/* Glassmorphism helpers */
+/* Premium corporate glassmorphism */
+.glass-premium {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(15, 81, 50, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
 .glass-dark {
-  background: rgba(12, 8, 7, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(197, 155, 109, 0.15);
+  background: rgba(26, 26, 26, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 160, 23, 0.2);
 }
 
-.glass-light {
-  background: rgba(252, 250, 247, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(61, 35, 20, 0.08);
-}
-
-.gold-glow {
-  text-shadow: 0 0 12px rgba(197, 155, 109, 0.4);
-}
-
-.border-gold-subtle {
-  border-color: rgba(197, 155, 109, 0.2);
-}
-
-/* Custom animation delays */
+/* Custom animation delays for stagger effects */
 .delay-100 { animation-delay: 100ms; }
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
 
+/* Custom Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
