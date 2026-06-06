@@ -27,7 +27,7 @@ export default function FloatingContactCenter() {
             className="mb-4 flex flex-col gap-3"
           >
             <a
-              href="https://wa.me/6281234567890" // Placeholder number
+              href="https://wa.me/6285284175388"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-3 rounded-full bg-white p-3 pr-4 shadow-lg ring-1 ring-black/5 hover:bg-gray-50 transition-colors"
