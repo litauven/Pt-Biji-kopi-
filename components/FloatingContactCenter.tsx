@@ -40,7 +40,7 @@ export default function FloatingContactCenter() {
             
             {!isMobile && (
               <a
-                href="mailto:marketing.example@acewinmello.com"
+                href="mailto:marketing@acemello.com"
                 className="flex items-center gap-3 rounded-full bg-white p-3 pr-4 shadow-lg ring-1 ring-black/5 hover:bg-gray-50 transition-colors"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-900 text-white">

@@ -8,6 +8,7 @@ import { Input } from "../../components/ui/Input";
 import { Textarea } from "../../components/ui/Textarea";
 import { Button } from "../../components/ui/Button";
 import { MapPin, Phone, Mail } from "lucide-react";
+import ContactForm from "../../components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us | PT Acewin Mello International",
@@ -59,17 +60,17 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-bold text-zinc-950 mb-1">Phone</h3>
-                      <p className="text-gray-600 leading-relaxed">+62 xxxxxxx</p>
+                      <p className="text-gray-600 leading-relaxed">+62 852 84175388</p>
                     </div>
                   </div>
                   
-                  <div className="flex gap-4">
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-emerald-900 shadow-sm shrink-0">
-                      <Mail className="w-5 h-5" />
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                      <Mail className="h-6 w-6 text-amber-600" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-zinc-950 mb-1">Email</h3>
-                      <p className="text-gray-600 leading-relaxed">marketing.example@acewinmello.com</p>
+                      <h3 className="font-bold text-gray-900 mb-1">Email Us</h3>
+                      <p className="text-gray-600 leading-relaxed">marketing@acemello.com</p>
                     </div>
                   </div>
                 </div>
@@ -90,43 +91,7 @@ export default function ContactPage() {
               {/* Contact Form */}
               <FadeIn delay={0.2} className="bg-white p-8 md:p-10 rounded-2xl shadow-lg border border-gray-100 h-fit">
                 <h2 className="text-2xl font-bold text-zinc-950 mb-6">Send us a message</h2>
-                <form className="space-y-5">
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div className="space-y-1.5">
-                      <label htmlFor="name" className="text-sm font-medium text-gray-700">Full Name *</label>
-                      <Input id="name" required placeholder="John Doe" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label htmlFor="company" className="text-sm font-medium text-gray-700">Company *</label>
-                      <Input id="company" required placeholder="Company Name" />
-                    </div>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div className="space-y-1.5">
-                      <label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address *</label>
-                      <Input id="email" type="email" required placeholder="john@example.com" />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label htmlFor="phone" className="text-sm font-medium text-gray-700">Phone Number</label>
-                      <Input id="phone" type="tel" placeholder="+1 234 567 890" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label htmlFor="subject" className="text-sm font-medium text-gray-700">Subject</label>
-                    <Input id="subject" placeholder="How can we help?" />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label htmlFor="message" className="text-sm font-medium text-gray-700">Message *</label>
-                    <Textarea id="message" required placeholder="Please provide details about your inquiry..." className="h-32" />
-                  </div>
-
-                  <Button type="submit" size="lg" className="w-full mt-2">
-                    Send Message
-                  </Button>
-                </form>
+                <ContactForm />
               </FadeIn>
 
             </div>

@@ -18,7 +18,7 @@ export default function SafeImage({
   const [hasError, setHasError] = useState(false);
   const imgRef = React.useRef<HTMLImageElement>(null);
 
-  // Reset states if src changes and set loading timeout for slow/blocked networks
+  // Reset states if src changes
   useEffect(() => {
     setIsLoading(true);
     setHasError(false);
@@ -28,22 +28,6 @@ export default function SafeImage({
       setIsLoading(false);
       return;
     }
-
-    const timer = setTimeout(() => {
-      setIsLoading((loading) => {
-        if (loading) {
-          // If the image is actually complete but onLoad didn't fire (browser cache), don't error out!
-          if (imgRef.current && imgRef.current.complete && imgRef.current.naturalWidth > 0) {
-             return false;
-          }
-          setHasError(true);
-          return false;
-        }
-        return loading;
-      });
-    }, 2500); // 2.5 seconds timeout
-
-    return () => clearTimeout(timer);
   }, [src]);
 
   useEffect(() => {
