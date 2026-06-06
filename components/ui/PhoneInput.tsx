@@ -106,7 +106,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, React.InputHTMLAttributes
   const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
     // Only allow numbers, spaces, and hyphens
     e.currentTarget.value = e.currentTarget.value.replace(/[^0-9\s\-]/g, '');
-    if (props.onInput) props.onInput(e);
+    if (props.onInput) props.onInput(e as any);
   };
 
   return (
